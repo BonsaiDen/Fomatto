@@ -1,0 +1,34 @@
+{
+    "name": "format",
+    "version": "0.0.1",
+    "description": "Lightweight JavaScript String Interpolation.",
+    "homepage": "https://github.com/BonsaiDen/format.js",
+    "author": "Ivo Wetzel <ivo.wetzel@googlemail.com>",
+    
+    "keywords": [
+        "string",
+        "interpolation",
+        "formatting",
+    ],
+    
+    "engines" : {
+        "node": ">=0.1.5"
+    },
+    
+    "main": "./lib/format",
+    
+    "repository": {
+        "type" : "git",
+        "url" : "http://github.com/BonsaiDen/format.js.git"
+    },
+
+    "bugs": {
+        "url": "http://github.com/BonsaiDen/format.js/issues"
+    },
+
+    "licenses": [{
+        "type": "MIT",
+        "url": "http://github.com/BonsaiDen/format.js/raw/master/LICENSE"
+    }]
+}
+
