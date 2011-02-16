@@ -1,5 +1,5 @@
 if (typeof window === 'undefined') {
-    var format = require('./format').format;
+    var format = require('./../lib/fomatto').format;
 
 } else {
     var exports = {};
