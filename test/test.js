@@ -127,14 +127,15 @@ exports.testPlainKeys = function(test) {
 };
 
 exports.testFormatting = function(test) {
-    test.expect(13);
+    test.expect(14);
     test.equals(format('{:upper}', 'Lancelot'), 'LANCELOT');
     test.equals(format('{:lower}', 'Lancelot'), 'lancelot');
     test.equals(format('{:upper:lpad(12, " ")}', 'Lancelot'), '    LANCELOT');
-    test.equals(format('{:lpad(12, " ")}', 'Lancelot'), '    Lancelot');
+    test.equals(format('{:lpad(12)}', 'Lancelot'), '    Lancelot');
     test.equals(format('{:rpad(12, " ")}', 'Lancelot'), 'Lancelot    ');
     test.equals(format('{:pad(12, "=")}', 'Lancelot'), '==Lancelot==');
     test.equals(format('{:surround("(", ")")}', 'Lancelot'), '(Lancelot)');
+    test.equals(format('{:surround("-")}', 'Lancelot'), '-Lancelot-');
     test.equals(format('{:surround("i", "i"):upper}', 'Lancelot'), 'ILANCELOTI');
     test.equals(format('{name:upper}', {name: 'Lancelot'}), 'LANCELOT');
     test.equals(format('{name[0]:lower}', {name: ['Lancelot']}), 'lancelot');
@@ -154,7 +155,7 @@ exports.testFormatting = function(test) {
 };
 
 exports.testCustomFormatting = function(test) {
-    test.expect(1);
+    test.expect(2);
     var custom = Formatter({
         unicornify: function(value) {
             return 'Unicorns!';
@@ -162,6 +163,7 @@ exports.testCustomFormatting = function(test) {
     });
 
     test.equals(custom('{:unicornify}', 'foo'), 'Unicorns!');
+    test.equals(custom('{:unicornify}'), 'Unicorns!');
     test.done();
 };
 
