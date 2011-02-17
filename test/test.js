@@ -1,8 +1,10 @@
 if (typeof window === 'undefined') {
-    var format = require('./../lib/fomatto').format;
+    var format = require('./../lib/fomatto').Formatter();
+    var FormatError = require('./../lib/fomatto').FormatError;
 
 } else {
     var exports = {};
+    format = Formatter();
 }
 
 exports.testObject = function(test) {
@@ -95,15 +97,12 @@ exports.testArrayIndex = function(test) {
 };
 
 exports.testPrintArray = function(test) {
-    test.expect(3);
+    test.expect(2);
     test.equals(format('Good morning Sir {}.', ['Lancelot']),
                 'Good morning Sir Lancelot.');
 
-    test.equals(format('Good evening { }.', ['Sir', 'Lancelot']),
-                'Good evening Sir Lancelot.');
-
-    test.equals(format('Good { Sir }.', ['evening', 'Lancelot']),
-                'Good evening Sir Lancelot.');
+    test.equals(format('Good {} Sir {}.', ['morning', 'Lancelot']),
+                'Good morning Sir Lancelot.');
 
     test.done();
 };
@@ -118,6 +117,30 @@ exports.testPlainKeys = function(test) {
 
     test.done();
 };
+
+exports.testFormatting = function(test) {
+    test.expect(11);
+    test.equals(format('{:upper}', 'Lancelot'), 'LANCELOT');
+    test.equals(format('{:lower}', 'Lancelot'), 'lancelot');
+    test.equals(format('{:upper:lpad(12, " ")}', 'Lancelot'), '    LANCELOT');
+    test.equals(format('{:lpad(12, " ")}', 'Lancelot'), '    Lancelot');
+    test.equals(format('{:rpad(12, " ")}', 'Lancelot'), 'Lancelot    ');
+    test.equals(format('{:pad(12, "=")}', 'Lancelot'), '==Lancelot==');
+    test.equals(format('{:surround("(", ")")}', 'Lancelot'), '(Lancelot)');
+    test.equals(format('{:surround("i", "i"):upper}', 'Lancelot'), 'ILANCELOTI');
+
+    test.equals(format('{name:upper}', {name: 'Lancelot'}), 'LANCELOT');
+    test.equals(format('{name[0]:lower}', {name: ['Lancelot']}), 'lancelot');
+
+    try {
+        test.equals(format('{:unicornify}', 'Lancelot'), 'LANCELOT');
+
+    } catch(err) {
+        test.ok(err instanceof FormatError);
+    }
+    test.done();
+};
+
 
 exports.testPlainAuto = function(test) {
     test.expect(3);
