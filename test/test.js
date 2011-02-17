@@ -109,7 +109,7 @@ exports.testPrintArray = function(test) {
     test.equals(format('Good morning Sir {}.', ['Lancelot']),
                 'Good morning Sir Lancelot.');
 
-    test.equals(format('Good {} Sir {}.', ['morning', 'Lancelot']),
+    test.equals(format('Good {0} Sir {1}.', ['morning', 'Lancelot']),
                 'Good morning Sir Lancelot.');
 
     test.done();
@@ -127,7 +127,7 @@ exports.testPlainKeys = function(test) {
 };
 
 exports.testFormatting = function(test) {
-    test.expect(11);
+    test.expect(13);
     test.equals(format('{:upper}', 'Lancelot'), 'LANCELOT');
     test.equals(format('{:lower}', 'Lancelot'), 'lancelot');
     test.equals(format('{:upper:lpad(12, " ")}', 'Lancelot'), '    LANCELOT');
@@ -138,6 +138,11 @@ exports.testFormatting = function(test) {
     test.equals(format('{:surround("i", "i"):upper}', 'Lancelot'), 'ILANCELOTI');
     test.equals(format('{name:upper}', {name: 'Lancelot'}), 'LANCELOT');
     test.equals(format('{name[0]:lower}', {name: ['Lancelot']}), 'lancelot');
+    test.equals(format('{:join(" ")}', ['blue', 'red', 'green', 'yellow']),
+                'blue red green yellow');
+
+    test.equals(format('{:join(",")}', ['blue', 'red', 'green', 'yellow']),
+                'blue,red,green,yellow');
 
     try {
         test.equals(format('{:unicornify}', 'Lancelot'), 'LANCELOT');
