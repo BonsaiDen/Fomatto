@@ -155,15 +155,15 @@ exports.testFormatting = function(test) {
 };
 
 exports.testCustomFormatting = function(test) {
-    test.expect(2);
+    test.expect(1);
     var custom = Formatter({
-        unicornify: function(value) {
-            return 'Unicorns!';
+        unicorns: function(value) {
+            return value + ' unicorns!';
         }
     });
 
-    test.equals(custom('{:unicornify}', 'foo'), 'Unicorns!');
-    test.equals(custom('{:unicornify}'), 'Unicorns!');
+    test.equals(custom('Here come the {:unicorns}', 'five'),
+                       'Here come the five unicorns!');
     test.done();
 };
 
