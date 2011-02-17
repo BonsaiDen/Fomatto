@@ -79,10 +79,10 @@ exports.testPrintObject = function(test) {
 
     test.expect(3);
     test.equals(format('Good morning {knight}.', knight),
-                'Good morning {knight}.');
+                'Good morning Sir Lancelot.');
 
     test.equals(format('Good morning {0}.', knight),
-                'Good morning {0}.');
+                'Good morning Sir Lancelot.');
 
     test.equals(format('Good morning {}.', knight),
                 'Good morning Sir Lancelot.');
