@@ -1,6 +1,7 @@
 if (typeof window === 'undefined') {
-    var format = require('./../lib/fomatto').Formatter();
-    var FormatError = require('./../lib/fomatto').FormatError;
+    Formatter = require('./../lib/fomatto').Formatter;
+    format = Formatter();
+    FormatError = require('./../lib/fomatto').FormatError;
 
 } else {
     var exports = {};
@@ -32,7 +33,7 @@ exports.testObjectNum = function(test) {
 };
 
 exports.testObjectProperties = function(test) {
-    test.expect(4);
+    test.expect(5);
     test.equals(format('Good {msg.time} Sir {msg.name}.', {
         msg: {
             name: 'Lancelot',
@@ -59,6 +60,13 @@ exports.testObjectProperties = function(test) {
             values: ['Lancelot', 'evening']
         }
     }), 'Good evening Sir Lancelot.');
+
+    try {
+        test.equals(format('{favorites.color}', {msg: {name:'Lancelot'}}), 'blue');
+
+    } catch(err) {
+        test.ok(err instanceof FormatError);
+    }
     test.done();
 };
 
@@ -128,7 +136,6 @@ exports.testFormatting = function(test) {
     test.equals(format('{:pad(12, "=")}', 'Lancelot'), '==Lancelot==');
     test.equals(format('{:surround("(", ")")}', 'Lancelot'), '(Lancelot)');
     test.equals(format('{:surround("i", "i"):upper}', 'Lancelot'), 'ILANCELOTI');
-
     test.equals(format('{name:upper}', {name: 'Lancelot'}), 'LANCELOT');
     test.equals(format('{name[0]:lower}', {name: ['Lancelot']}), 'lancelot');
 
@@ -141,6 +148,17 @@ exports.testFormatting = function(test) {
     test.done();
 };
 
+exports.testCustomFormatting = function(test) {
+    test.expect(1);
+    var custom = Formatter({
+        unicornify: function(value) {
+            return 'Unicorns!';
+        }
+    });
+
+    test.equals(custom('{:unicornify}', 'foo'), 'Unicorns!');
+    test.done();
+};
 
 exports.testPlainAuto = function(test) {
     test.expect(3);
