@@ -62,7 +62,7 @@ exports.testObjectProperties = function(test) {
     }), 'Good evening Sir Lancelot.');
 
     try {
-        test.equals(format('{favorites.color}', {msg: {name:'Lancelot'}}), 'blue');
+        format('{favorite.color}', {msg: {name:'Lancelot'}});
 
     } catch(err) {
         test.ok(err instanceof FormatError);
@@ -127,7 +127,11 @@ exports.testPlainKeys = function(test) {
 };
 
 exports.testFormatting = function(test) {
-    test.expect(15);
+    test.expect(19);
+    test.equals(format('{:hex}', 32768), '8000');
+    test.equals(format('{:bin}', 255), '11111111');
+    test.equals(format('{:hex(true)}', 32768), '0x8000');
+    test.equals(format('{:bin(true)}', 255), '0b11111111');
     test.equals(format('{:upper}', 'Lancelot'), 'LANCELOT');
     test.equals(format('{:lower}', 'Lancelot'), 'lancelot');
     test.equals(format('{:upper:lpad(12, " ")}', 'Lancelot'), '    LANCELOT');
@@ -147,7 +151,7 @@ exports.testFormatting = function(test) {
                 'blue,red,green,yellow');
 
     try {
-        test.equals(format('{:unicornify}', 'Lancelot'), 'LANCELOT');
+        format('{:unicornify}', 'Lancelot');
 
     } catch(err) {
         test.ok(err instanceof FormatError);
