@@ -56,14 +56,19 @@ It is also possible to use negative indexes.
 
 Fōmatto comes with a couple of standard formatters:
     
-- `upper` transforms the value into uppercase.
-- `lower` transforms the value into lowercase.
-- `lpad(count [, character])` pads the value left.
-- `rpad(count [, character])` pads the value right.
-- `pad(count [, character])` pads the value on both sides.
-- `repeat(count)` repeats the value.
-- `join([character])` joins the value.
-- `surround(left [, right])` surrounds the value.
+- `upper` will transform to UPPER case.
+- `lower` will transform to lower case.
+- `lpad(count [, character=' '])` will pad on the left side with `character`.
+- `rpad(count [, character=' '])` will pad on the right side with `character`.
+- `pad(count [, character=' '])` will pad on both sides with `character`.
+- `surround(left=' ' [, right=left])` will surround with `left` and `right`.
+- `repeat(count=0)` will repeat `count` times.
+- `join([character=' '])` will join an array with `character`.
+- `hex([leading=false])` will convert to hexadecimal representation. If leading
+  is true `0x` will be prepended.
+
+- `bin([leading=false])` will convert to binary representation. If leading
+  is true `0b` will be prepended.                                     
 
 ## Custom formatters
 
@@ -82,6 +87,6 @@ Using the `Formatter` factory one can add their own formatters.
 
 - Additional tests
 - Allow for [] in property accessors
-- Add support for negative numbers as formatter arguments
+- Add support for escaped {} in formatting strings
 - More standard formatters
 
