@@ -127,7 +127,7 @@ exports.testPlainKeys = function(test) {
 };
 
 exports.testFormatting = function(test) {
-    test.expect(14);
+    test.expect(15);
     test.equals(format('{:upper}', 'Lancelot'), 'LANCELOT');
     test.equals(format('{:lower}', 'Lancelot'), 'lancelot');
     test.equals(format('{:upper:lpad(12, " ")}', 'Lancelot'), '    LANCELOT');
@@ -137,6 +137,7 @@ exports.testFormatting = function(test) {
     test.equals(format('{:surround("(", ")")}', 'Lancelot'), '(Lancelot)');
     test.equals(format('{:surround("-")}', 'Lancelot'), '-Lancelot-');
     test.equals(format('{:surround("i", "i"):upper}', 'Lancelot'), 'ILANCELOTI');
+    test.equals(format('{:surround(\'i\', \'i\'):upper}', 'Lancelot'), 'ILANCELOTI');
     test.equals(format('{name:upper}', {name: 'Lancelot'}), 'LANCELOT');
     test.equals(format('{name[0]:lower}', {name: ['Lancelot']}), 'lancelot');
     test.equals(format('{:join(" ")}', ['blue', 'red', 'green', 'yellow']),
