@@ -1,4 +1,3 @@
-
 // Setup
 if (typeof window === 'undefined') {
     Formatter = require('./../lib/fomatto').Formatter;
