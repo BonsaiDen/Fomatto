@@ -33,7 +33,7 @@ exports.testObjectNum = function(test) {
 };
 
 exports.testObjectProperties = function(test) {
-    test.expect(5);
+    test.expect(8);
     test.equals(format('Good {msg.time} Sir {msg.name}.', {
         msg: {
             name: 'Lancelot',
@@ -61,11 +61,24 @@ exports.testObjectProperties = function(test) {
         }
     }), 'Good evening Sir Lancelot.');
 
+    test.equals(format('My favorite color is {colors[\'"favorite"\']}.', {
+        colors: {
+            '"favorite"': 'blue'
+        }
+    }), 'My favorite color is blue.');
+
+    test.equals(format('My favorite color is {colors["\"favorite\""]}.', {
+        colors: {
+            '"favorite"': 'blue'
+        }
+    }), 'My favorite color is blue.');
+
     try {
         format('{favorite.color}', {msg: {name:'Lancelot'}});
 
     } catch(err) {
         test.ok(err instanceof FormatError);
+        test.equal(err.message, 'Cannot access property "color" of undefined.');
     }
     test.done();
 };
@@ -127,7 +140,7 @@ exports.testPlainKeys = function(test) {
 };
 
 exports.testFormatting = function(test) {
-    test.expect(19);
+    test.expect(22);
     test.equals(format('{:hex}', 32768), '8000');
     test.equals(format('{:bin}', 255), '11111111');
     test.equals(format('{:hex(true)}', 32768), '0x8000');
@@ -138,6 +151,8 @@ exports.testFormatting = function(test) {
     test.equals(format('{:lpad(12)}', 'Lancelot'), '    Lancelot');
     test.equals(format('{:rpad(12, " ")}', 'Lancelot'), 'Lancelot    ');
     test.equals(format('{:pad(12, "=")}', 'Lancelot'), '==Lancelot==');
+    test.equals(format('{:pad(12, "\\"=")}', 'Lancelot'), '"="=Lancelot"="=');
+    test.equals(format('{:pad(12, "\'=")}', 'Lancelot'), '\'=\'=Lancelot\'=\'=');
     test.equals(format('{:surround("(", ")")}', 'Lancelot'), '(Lancelot)');
     test.equals(format('{:surround("-")}', 'Lancelot'), '-Lancelot-');
     test.equals(format('{:surround("i", "i"):upper}', 'Lancelot'), 'ILANCELOTI');
@@ -155,6 +170,7 @@ exports.testFormatting = function(test) {
 
     } catch(err) {
         test.ok(err instanceof FormatError);
+        test.equal(err.message, 'Undefined formatter "unicornify".');
     }
     test.done();
 };
