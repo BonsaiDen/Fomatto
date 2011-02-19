@@ -13,6 +13,17 @@ if (typeof window === 'undefined') {
 
 // Plain ------------------------------------------------------------------------
 // ------------------------------------------------------------------------------
+exports.testBase = function(test) {
+    test.expect(1);
+    var string = '{1} {} {{2}} { {3}} { 4} {5 } {6}} {{7} } \\{8\\} \\{9} \{{10}}';
+    var data = ['000', '001', '002', '003', '004', '005',
+                '006', '007', '008', '009', '010'];
+
+    var expected = '001 foo {002} { 003} 004 005 006} {007 } \\{8\\} \\{9} {010}';
+    test.equals(format(string, data, 'foo'), expected);
+    test.done();
+};
+
 exports.testPlainNamed = function(test) {
     test.expect(2);
     test.equals(format('Good morning Sir {name}.', 'Lancelot'),
