@@ -4,14 +4,11 @@ Fōmatto
 Fōmatto provides leightweight string interpolation and formatting for
 JavaScript.
 
-The library brings with it:
-
-- The `format` function
-- The `Formatter` factory
-- The `FormatError` error type
+The library brings with it the `Formatter` factory and the `FormatError`.
 
 ## Basic usage
 
+    > format = Formatter()
     > format('Good {} Sir {}.', 'morning', 'Lancelot')
     'Good morning Sir Lancelot.'
     

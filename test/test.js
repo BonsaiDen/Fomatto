@@ -10,6 +10,11 @@ if (typeof window === 'undefined') {
     format = Formatter();
 }
 
+function is(type, obj) {
+    return obj !== null && obj !== undefined
+           && Object.prototype.toString.call(obj).slice(8, -1) === type;
+}
+
 
 // Plain ------------------------------------------------------------------------
 // ------------------------------------------------------------------------------
@@ -227,6 +232,25 @@ exports.testPropertyAccessError = function(test) {
 
 // Formatting -------------------------------------------------------------------
 // ------------------------------------------------------------------------------
+exports.testFormattingArgs = function(test) {
+    test.expect(6);
+    var custom = Formatter({
+        test: function(value, boolTrue, boolFalse,
+                              numPositive, numNegative,
+                              strDouble, strSingle) {
+
+            test.ok(boolTrue === true);
+            test.ok(boolFalse === false);
+            test.ok(numPositive === 1);
+            test.ok(numNegative === -1);
+            test.ok(strDouble === 'te\'\"st');
+            test.ok(strSingle === 'te\'\"st');
+        }
+    });
+    custom('{:test(true, false, 1, -1, "te\'\\"st", \'te\\\'"st\')}', '');
+    test.done();
+};
+
 exports.testFormattingJoin = function(test) {
     test.expect(2);
     test.equals(format('{:join(" ")}', ['blue', 'red', 'green', 'yellow']),
@@ -261,6 +285,15 @@ exports.testFormattingBase = function(test) {
     test.equals(format('{:bin(true)}', 255), '0b11111111');
     test.done();
 };
+
+exports.testFormattingNumber = function(test) {
+    test.expect(3);
+    test.equals(format('{:lpad(4, "0")}', 3), '0003');
+    test.equals(format('{:rpad(4, "0")}', 1), '1000');
+    test.equals(format('{:pad(4, "0")}', 2), '0020');
+    test.done();
+};
+
 exports.testFormattingPad = function(test) {
     test.expect(3);
     test.equals(format('{:lpad(12)}', 'Lancelot'), '    Lancelot');
