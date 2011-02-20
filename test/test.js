@@ -336,7 +336,7 @@ exports.testFormattingError = function(test) {
 };
 
 exports.testFormattingCustom = function(test) {
-    test.expect(1);
+    test.expect(2);
     var custom = Formatter({
         unicorns: function(value) {
             return value + ' unicorns!';
@@ -345,6 +345,36 @@ exports.testFormattingCustom = function(test) {
 
     test.equals(custom('Here come the {:unicorns}', 'five'),
                        'Here come the five unicorns!');
+
+    // add another custom one
+    custom.formats.foo = function(value) {
+        return 'foo';
+    };
+    test.equals(custom('{:foo}', ''), 'foo');
+    test.done();
+};
+
+exports.testFormattingAddDefault = function(test) {
+    test.expect(1);
+    Formatter.formats.bar = function(value) {
+        return 'bar';
+    };
+    test.equals(format('{:bar}', ''), 'bar');
+    test.done();
+};
+
+exports.testFormattingCustomPreceedence = function(test) {
+    test.expect(1);
+    Formatter.formats.preceeds = function(value) {
+        return 'false';
+    };
+
+    var custom = Formatter({
+        preceeds: function(value) {
+            return 'true';
+        }
+    });
+    test.equals(custom('{:preceeds}', ''), 'true');
     test.done();
 };
 

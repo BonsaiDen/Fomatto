@@ -1,12 +1,12 @@
-Fōmatto
-=======
+Fōmatto - Japanese for Format
+=============================
 
 Fōmatto provides leightweight string interpolation and formatting for
 JavaScript.
 
 The library brings with it the `Formatter` factory and the `FormatError`.
 
-## Basic usage
+### Basic usage
 
     > format = Formatter()
     > format('Good {} Sir {}.', 'morning', 'Lancelot')
@@ -20,7 +20,7 @@ The library brings with it the `Formatter` factory and the `FormatError`.
 
 It is also possible to use negative indexes.
 
-## Object access
+### Object access
 
     > format('Good {day.time} Sir {knight.name}.', {
         day: {
@@ -43,7 +43,7 @@ It is also possible to use negative indexes.
     })
     > 'Good day Sir Lancelot.'
 
-# Using formatters
+# Using formats
 
     > format('{:upper}!', 'banana')
     'BANANA!'
@@ -51,13 +51,13 @@ It is also possible to use negative indexes.
     > format('Some fruits: {:join(', ')}!', ['melons', 'oranges', 'strawberries'])
     'Some fruits: melons, oranges, strawberries!'
 
-Fōmatto comes with a couple of standard formatters:
+Fōmatto comes with a couple of standard formats:
     
 - `upper` will transform to UPPER case.
 - `lower` will transform to lower case.
-- `lpad(count [, character=' '])` will pad on the left side with `character`.
-- `rpad(count [, character=' '])` will pad on the right side with `character`.
-- `pad(count [, character=' '])` will pad on both sides with `character`.
+- `lpad(count [, padding=' '])` will pad to `count` characters; on the left side, with `padding`.
+- `rpad(count [, padding=' '])` will pad to `count` characters; on the right side, with `padding`.
+- `pad(count [, padding=' '])` will equally pad to `count` characters; on both sides, with `padding`.
 - `surround(left=' ' [, right=left])` will surround with `left` and `right`.
 - `repeat(count=0)` will repeat `count` times.
 - `join([character=' '])` will join an array with `character`.
@@ -67,7 +67,7 @@ Fōmatto comes with a couple of standard formatters:
 - `bin([leading=false])` will convert to binary representation. If leading
   is true `0b` will be prepended.                                     
 
-## Custom formatters
+### Custom formats
 
 Using the `Formatter` factory one can add their own formatters.
 
@@ -80,10 +80,28 @@ Using the `Formatter` factory one can add their own formatters.
     > custom('Here come the {:unicorns}', 'five')
     'Here come the five unicorns!'
 
+It is also possible to add more formats later on by setting properties on the
+`formats` object of a formatter.
+
+    custom.formats.foo = function(value) {
+        return 'foo';
+    };
+
+This will add the format `:foo`.
+
+### Adding default formats
+
+By extending `Formatter.formats` it's also possible to add more default
+formats.
+
+    Formatter.formats.bonsai = function(value) {
+        // ...   
+    };
+
+
+The format `:bonsai` will now be available to all formatters.
+
 # TODO
 
-- Additional tests
 - Allow for [] in property accessors
-- Add support for escaped {} in formatting strings
-- More standard formatters
 
