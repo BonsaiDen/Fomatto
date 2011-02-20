@@ -277,6 +277,14 @@ exports.testFormattingJoin = function(test) {
     test.done();
 };
 
+exports.testFormattingRepeat = function(test) {
+    test.expect(3);
+    test.equals(format('{:repeat(5)}', '-'), '-----');
+    test.equals(format('{:repeat(1)}', 'Test'), 'Test');
+    test.equals(format('{:repeat(0)}', 'Test'), '');
+    test.done();
+};
+
 exports.testFormattingSurround = function(test) {
     test.expect(2);
     test.equals(format('{:surround("(", ")")}', 'Lancelot'), '(Lancelot)');
@@ -310,10 +318,23 @@ exports.testFormattingNumber = function(test) {
 };
 
 exports.testFormattingPad = function(test) {
-    test.expect(3);
+    test.expect(6);
+    test.equals(format('{:lpad(2)}', 'Lancelot'), 'Lancelot');
     test.equals(format('{:lpad(12)}', 'Lancelot'), '    Lancelot');
+    test.equals(format('{:rpad(2, " ")}', 'Lancelot'), 'Lancelot');
     test.equals(format('{:rpad(12, " ")}', 'Lancelot'), 'Lancelot    ');
     test.equals(format('{:pad(12, "=")}', 'Lancelot'), '==Lancelot==');
+    test.equals(format('{:pad(2, "=")}', 'Lancelot'), 'Lancelot');
+    test.done();
+};
+
+exports.testFormattingMultiple = function(test) {
+    test.expect(3);
+    test.equals(format('{:upper:lpad(12, " ")}', 'Lancelot'), '    LANCELOT');
+    test.equals(format('{:surround("i", "i"):upper}', 'Lancelot'), 'ILANCELOTI');
+    test.equals(format('{:join(", "):surround("[", "]"):upper:pad(30, "-")}',
+                      ['blue', 'red', 'green', 'yellow']),
+                       '--[BLUE, RED, GREEN, YELLOW]--');
     test.done();
 };
 
@@ -324,16 +345,11 @@ exports.testFormattingAccess = function(test) {
     test.done();
 };
 
-exports.testFormattingMultiple = function(test) {
-    test.expect(2);
-    test.equals(format('{:upper:lpad(12, " ")}', 'Lancelot'), '    LANCELOT');
-    test.equals(format('{:surround("i", "i"):upper}', 'Lancelot'), 'ILANCELOTI');
-    test.done();
-};
-
 exports.testFormattingEscaped = function(test) {
     test.expect(3);
-    test.equals(format('{:surround(\'i\', \'i\'):upper}', 'Lancelot'), 'ILANCELOTI');
+    test.equals(format('{:surround(\'i\', \'i\'):upper}', 'Lancelot'),
+               'ILANCELOTI');
+
     test.equals(format('{:pad(12, "\\"=")}', 'Lancelot'), '"="=Lancelot"="=');
     test.equals(format('{:pad(12, "\'=")}', 'Lancelot'), '\'=\'=Lancelot\'=\'=');
     test.done();
