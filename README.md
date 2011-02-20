@@ -101,7 +101,3 @@ formats.
 
 The format `:bonsai` will now be available to all formatters.
 
-# TODO
-
-- Allow for [] in property accessors
-

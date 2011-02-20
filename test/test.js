@@ -216,6 +216,22 @@ exports.testPropertyAccessEscaped = function(test) {
     test.done();
 };
 
+exports.testPropertyAccessSquareBrackets = function(test) {
+    test.expect(2);
+    test.equals(format('My favorite color is {colors["[favorite]"][0]}.', {
+        colors: {
+            '[favorite]': ['blue']
+        }
+    }), 'My favorite color is blue.');
+
+    test.equals(format('My favorite color is {colors[\'[favorite]\'][0]}.', {
+        colors: {
+            '[favorite]': ['blue']
+        }
+    }), 'My favorite color is blue.');
+    test.done();
+};
+
 exports.testPropertyAccessError = function(test) {
     test.expect(2);
     try {
