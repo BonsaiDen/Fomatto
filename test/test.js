@@ -19,11 +19,15 @@ function is(type, obj) {
 // ------------------------------------------------------------------------------
 exports.testBase = function(test) {
     test.expect(1);
-    var string = '{1} {{} {} {{2}} { {3}} { 4} {5 } {6}} {{7} } \\{8\\} \\{9} \{{10}}';
+    var string = '{1} {{} {} {{2}} { {3}} { 4} {5 } '
+                 + '{6}} {{7} } \\{8\\} \\{9} \\{{10}} \\n';
+
     var data = ['000', '001', '002', '003', '004', '005',
                 '006', '007', '008', '009', '010'];
 
-    var expected = '001 {foo bar {002} { 003} 004 005 006} {007 } \\{8\\} \\{9} {010}';
+    var expected = '001 {foo bar {002} { 003} 004 005 '
+                   + '006} {007 } {8} {9} {010} \\n';
+
     test.equals(format(string, data, 'foo', 'bar'), expected);
     test.done();
 };
@@ -318,13 +322,14 @@ exports.testFormattingNumber = function(test) {
 };
 
 exports.testFormattingPad = function(test) {
-    test.expect(6);
+    test.expect(7);
     test.equals(format('{:lpad(2)}', 'Lancelot'), 'Lancelot');
     test.equals(format('{:lpad(12)}', 'Lancelot'), '    Lancelot');
     test.equals(format('{:rpad(2, " ")}', 'Lancelot'), 'Lancelot');
     test.equals(format('{:rpad(12, " ")}', 'Lancelot'), 'Lancelot    ');
     test.equals(format('{:pad(12, "=")}', 'Lancelot'), '==Lancelot==');
     test.equals(format('{:pad(2, "=")}', 'Lancelot'), 'Lancelot');
+    test.equals(format('{:pad(3, "=")}', 'I'), '=I=');
     test.done();
 };
 
