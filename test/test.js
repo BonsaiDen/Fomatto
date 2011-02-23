@@ -25,10 +25,10 @@ exports.testBase = function(test) {
     var data = ['000', '001', '002', '003', '004', '005',
                 '006', '007', '008', '009', '010'];
 
-    var expected = '001 {foo bar {002} { 003} 004 005 '
+    var expected = '001 {foo \\{bar\\} {002} { 003} 004 005 '
                    + '006} {007 } {8} {9} {010} \\n';
 
-    test.equals(format(string, data, 'foo', 'bar'), expected);
+    test.equals(format(string, data, 'foo', '\\{bar\\}'), expected);
     test.done();
 };
 
