@@ -331,7 +331,7 @@ exports.testFormattingNumber = function(test) {
 };
 
 exports.testFormattingPad = function(test) {
-    test.expect(7);
+    test.expect(8);
     test.equals(format('{:lpad(2)}', 'Lancelot'), 'Lancelot');
     test.equals(format('{:lpad(12)}', 'Lancelot'), '    Lancelot');
     test.equals(format('{:rpad(2, " ")}', 'Lancelot'), 'Lancelot');
@@ -339,6 +339,7 @@ exports.testFormattingPad = function(test) {
     test.equals(format('{:pad(12, "=")}', 'Lancelot'), '==Lancelot==');
     test.equals(format('{:pad(2, "=")}', 'Lancelot'), 'Lancelot');
     test.equals(format('{:pad(3, "=")}', 'I'), '=I=');
+    test.equals(format('{:pad(4, "=")}', 'I'), '==I=');
     test.done();
 };
 
