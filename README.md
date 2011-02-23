@@ -55,9 +55,12 @@ Fōmatto comes with a couple of standard formats:
     
 - `upper` will transform to UPPER case.
 - `lower` will transform to lower case.
-- `lpad(count [, padding=' '])` will pad to `count` characters; on the left side, with `padding`.
-- `rpad(count [, padding=' '])` will pad to `count` characters; on the right side, with `padding`.
-- `pad(count [, padding=' '])` will equally pad to `count` characters; on both sides, with `padding`.
+- `lpad(count [, padding=' '])` will pad to `count` characters on the left side.
+- `rpad(count [, padding=' '])` will pad to `count` characters on the right side.
+- `pad(count [, padding=' '])` will equally pad to `count` characters on both sides.
+
+> **Note:** The `pad` formats only support single characters for padding.
+
 - `surround(left=' ' [, right=left])` will surround with `left` and `right`.
 - `repeat(count=0)` will repeat `count` times.
 - `join([character=' '])` will join an array with `character`.
