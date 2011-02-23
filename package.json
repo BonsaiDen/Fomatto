@@ -1,6 +1,6 @@
 {
     "name": "fomatto",
-    "version": "0.4.5",
+    "version": "0.4.6",
     "description": "Lightweight JavaScript String Interpolation.",
     "homepage": "https://github.com/BonsaiDen/fomatto",
     "author": "Ivo Wetzel <ivo.wetzel@googlemail.com>",
