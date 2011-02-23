@@ -271,12 +271,21 @@ exports.testFormattingArgs = function(test) {
 };
 
 exports.testFormattingJoin = function(test) {
-    test.expect(2);
+    test.expect(5);
     test.equals(format('{:join(" ")}', ['blue', 'red', 'green', 'yellow']),
                 'blue red green yellow');
 
     test.equals(format('{:join(",")}', ['blue', 'red', 'green', 'yellow']),
                 'blue,red,green,yellow');
+
+    test.equals(format('{:join("")}', ['blue', 'red', 'green', 'yellow']),
+                'blueredgreenyellow');
+
+    test.equals(format('{:join()}', ['blue', 'red', 'green', 'yellow']),
+                'blue, red, green, yellow');
+
+    test.equals(format('{:join(false)}', ['blue', 'red', 'green', 'yellow']),
+                'bluefalseredfalsegreenfalseyellow');
 
     test.done();
 };
