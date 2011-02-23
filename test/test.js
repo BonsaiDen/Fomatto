@@ -221,7 +221,13 @@ exports.testPropertyAccessEscaped = function(test) {
 };
 
 exports.testPropertyAccessSquareBrackets = function(test) {
-    test.expect(2);
+    test.expect(3);
+    test.equals(format('My favorite color is {empty[""][0]}.', {
+        empty: {
+            '': ['blue']
+        }
+    }), 'My favorite color is blue.');
+
     test.equals(format('My favorite color is {colors["[favorite]"][0]}.', {
         colors: {
             '[favorite]': ['blue']
@@ -252,21 +258,22 @@ exports.testPropertyAccessError = function(test) {
 // Formatting -------------------------------------------------------------------
 // ------------------------------------------------------------------------------
 exports.testFormattingArgs = function(test) {
-    test.expect(6);
+    test.expect(7);
     var custom = Formatter({
         test: function(value, boolTrue, boolFalse,
                               numPositive, numNegative,
-                              strDouble, strSingle) {
+                              strEmpty, strDouble, strSingle) {
 
             test.ok(boolTrue === true);
             test.ok(boolFalse === false);
             test.ok(numPositive === 1);
             test.ok(numNegative === -1);
+            test.ok(strEmpty === '');
             test.ok(strDouble === 'te\'\"st');
             test.ok(strSingle === 'te\'\"st');
         }
     });
-    custom('{:test(true, false, 1, -1, "te\'\\"st", \'te\\\'"st\')}', '');
+    custom('{:test(true, false, 1, -1, "", "te\'\\"st", \'te\\\'"st\')}', '');
     test.done();
 };
 
@@ -304,7 +311,6 @@ exports.testFormattingSurround = function(test) {
     test.equals(format('{:surround("-")}', 'Lancelot'), '-Lancelot-');
     test.done();
 };
-
 
 exports.testFormattingCase = function(test) {
     test.expect(2);
