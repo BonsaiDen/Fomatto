@@ -115,6 +115,26 @@ exports.testArrayIndex = function(test) {
     test.done();
 };
 
+exports.testArrayLikes = function(test) {
+    test.expect(3);
+
+    function foo() {
+        test.equals(format('Good {-1} Sir {1}.', arguments),
+                    'Good evening Sir Lancelot.');
+    }
+    foo('evening', 'Lancelot');
+
+    var arrayThing = {0: 'evening', 1: 'Lancelot', length: 2};
+    test.equals(format('Good {-1} Sir {1}.', arrayThing),
+                'Good evening Sir Lancelot.');
+
+    arrayThing.length = '4';
+    test.notEqual(format('Good {-1} Sir {1}.', arrayThing),
+                   'Good evening Sir Lancelot.');
+
+    test.done();
+};
+
 
 // Objects-----------------------------------------------------------------------
 // ------------------------------------------------------------------------------
