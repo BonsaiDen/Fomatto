@@ -6,52 +6,71 @@ JavaScript.
 
 The library brings with it the `Formatter` factory and the `FormatError`.
 
-### Basic usage
+# Usage
+    
+In order to use Fōmatto it is necessary to create a `format` function with the 
+`Formatter` factory
 
-    > format = Formatter()
+    Formatter([formats])
+
+## The `format` function
+
+    format(template, arg1[, arg2, arg3, ...argN])
+
+The `format` function takes a **template** and either  **multiple arguments**, 
+an **array** or **array like object** (an object with a `length` property of type
+`Number`) or a standard **object** as its arguments. 
+
     > format('Good {} Sir {}.', 'morning', 'Lancelot')
     'Good morning Sir Lancelot.'
-    
+
+    > format('Good {0} Sir {1}.', 'morning', 'Lancelot')
+    'Good morning Sir Lancelot.'
+
     > format('Good {time} Sir {name}.', 'morning', 'Lancelot')
     'Good morning Sir Lancelot.'
 
     > format('Good {0} Sir {1}.', ['morning', 'Lancelot'])
     'Good morning Sir Lancelot.'
 
-It is also possible to use negative indexes.
+    > format('Good {time} Sir {name}.', {time: 'morning', name: 'Lancelot'})
+    'Good morning Sir Lancelot.'
 
-### Object access
+    > format('Good {0} Sir {1}.', {0: 'morning', 1: 'Lancelot', length: 2})
+    'Good morning Sir Lancelot.'
 
-    > format('Good {day.time} Sir {knight.name}.', {
-        day: {
-            time: 'evening'
-        },
+## Templates
 
-        knight: {
-            name: 'Lancelot'
-        }
-    })
-    > 'Good evening Sir Lancelot.'
+String templates contain placeholders wrapped in `{}`. There are a number of
+different ways in which these placeholders can be used to insert data into a
+template.
 
-    > format('Good {day["time"]} Sir {knight["name"]}.', {
-        ...
-    })
-    > 'Good evening Sir Lancelot.'
+ - Auto indexes via `{}`, these automatically insert the **next item** from an 
+   array or a list of arguments.
 
-    > format('Good {msg[0]} Sir {msg[1]}.', {
-        msg: ['day', 'Lancelot']
-    })
-    > 'Good day Sir Lancelot.'
+ - Positive `{1}` or negative `{-1}` indexes, these will insert the **Nth** or 
+   **Nth last** index of an array or a list of arguments.
 
-# Using formats
+ - Property access via `{name}`, these will either insert the corresponding
+   **property of an object** or behave like auto indexes in case of an array or 
+   a list of arguments.
 
-    > format('{:upper}!', 'banana')
+ - Complex property access via `{users.names[2]['first']}`, these will query an
+   **object** for the specified property and throw a `FormatError` in case the 
+   property could not be resolved.
+
+# Formats
+
+By appending a semicolon at the end of a placeholder it is possible to apply a
+formatting function to the value before it is inserted.
+
+    > format('{0:upper}!', 'banana')
     'BANANA!'
 
     > format('Some fruits: {:join(', ')}!', ['melons', 'oranges', 'strawberries'])
     'Some fruits: melons, oranges, strawberries!'
 
-Fōmatto comes with a couple of standard formats:
+## Standard formats
     
 - `upper` will transform to UPPER case.
 - `lower` will transform to lower case.
@@ -70,7 +89,7 @@ Fōmatto comes with a couple of standard formats:
 - `bin([leading=false])` will convert to binary representation. If leading
   is true `0b` will be prepended.                                     
 
-### Custom formats
+## Custom formats
 
 Using the `Formatter` factory one can add their own formatters.
 
@@ -92,7 +111,7 @@ It is also possible to add more formats later on by setting properties on the
 
 This will add the format `:foo`.
 
-### Adding default formats
+## Adding default formats
 
 By extending `Formatter.formats` it's also possible to add more default
 formats.
@@ -100,7 +119,6 @@ formats.
     Formatter.formats.bonsai = function(value) {
         // ...   
     };
-
 
 The format `:bonsai` will now be available to all formatters.
 
