@@ -163,14 +163,20 @@ exports.testObjectToString = function(test) {
         }
     };
 
+    var time = {
+        toString: function() {
+            return 'morning';
+        }
+    };
+
     test.expect(3);
-    test.equals(format('Good morning {knight}.', knight),
+    test.equals(format('Good {time} {knight}.', time,knight),
                 'Good morning Sir Lancelot.');
 
-    test.equals(format('Good morning {0}.', knight),
+    test.equals(format('Good {0} {1}.', time, knight),
                 'Good morning Sir Lancelot.');
 
-    test.equals(format('Good morning {}.', knight),
+    test.equals(format('Good {} {}.', time, knight),
                 'Good morning Sir Lancelot.');
 
     test.done();
@@ -380,7 +386,9 @@ exports.testFormattingMultiple = function(test) {
 };
 
 exports.testFormattingAccess = function(test) {
-    test.expect(2);
+    test.expect(4);
+    test.equals(format('{:upper}', 'Lancelot'), 'LANCELOT');
+    test.equals(format('{0:lower}', 'Lancelot'), 'lancelot');
     test.equals(format('{name:upper}', {name: 'Lancelot'}), 'LANCELOT');
     test.equals(format('{name[0]:lower}', {name: ['Lancelot']}), 'lancelot');
     test.done();
