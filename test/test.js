@@ -68,7 +68,7 @@ exports.testPlainIndex = function(test) {
     test.equals(format('Good {1} Sir {0}.', 'Lancelot', 'evening'),
                 'Good evening Sir Lancelot.');
 
-    test.equals(format('Good {-1} Sir {-2}.', 'Lancelot', 'evening', 'blue'),
+    test.equals(format('Good {-0} Sir {-1}.', 'Lancelot', 'evening'),
                 'Good evening Sir Lancelot.');
 
     test.done();
@@ -109,7 +109,7 @@ exports.testArrayIndex = function(test) {
     test.equals(format('Good {0} Sir {1}.', ['evening', 'Lancelot']),
                 'Good evening Sir Lancelot.');
 
-    test.equals(format('Good {-2} Sir {-1}.', ['evening', 'Lancelot', 'blue']),
+    test.equals(format('Good {-1} Sir {-0}.', ['evening', 'Lancelot']),
                 'Good evening Sir Lancelot.');
 
     test.done();
