@@ -68,7 +68,18 @@ exports.testPlainIndex = function(test) {
     test.equals(format('Good {1} Sir {0}.', 'Lancelot', 'evening'),
                 'Good evening Sir Lancelot.');
 
-    test.equals(format('Good {-0} Sir {-1}.', 'Lancelot', 'evening'),
+    test.equals(format('Good {-1} Sir {-2}.', 'Lancelot', 'evening'),
+                'Good evening Sir Lancelot.');
+
+    test.done();
+};
+
+exports.testPlainIndexWhitespace = function(test) {
+    test.expect(2);
+    test.equals(format('Good { 0 } Sir { 1 }.', 'evening', 'Lancelot'),
+                'Good evening Sir Lancelot.');
+
+    test.equals(format('Good { -1} Sir { -2 }.', 'Lancelot', 'evening'),
                 'Good evening Sir Lancelot.');
 
     test.done();
@@ -109,7 +120,7 @@ exports.testArrayIndex = function(test) {
     test.equals(format('Good {0} Sir {1}.', ['evening', 'Lancelot']),
                 'Good evening Sir Lancelot.');
 
-    test.equals(format('Good {-1} Sir {-0}.', ['evening', 'Lancelot']),
+    test.equals(format('Good {-2} Sir {-1}.', ['evening', 'Lancelot']),
                 'Good evening Sir Lancelot.');
 
     test.done();
@@ -119,17 +130,17 @@ exports.testArrayLikes = function(test) {
     test.expect(3);
 
     function foo() {
-        test.equals(format('Good {-1} Sir {1}.', arguments),
+        test.equals(format('Good {-2} Sir {1}.', arguments),
                     'Good evening Sir Lancelot.');
     }
     foo('evening', 'Lancelot');
 
     var arrayThing = {0: 'evening', 1: 'Lancelot', length: 2};
-    test.equals(format('Good {-1} Sir {1}.', arrayThing),
+    test.equals(format('Good {-2} Sir {1}.', arrayThing),
                 'Good evening Sir Lancelot.');
 
     arrayThing.length = '4';
-    test.notEqual(format('Good {-1} Sir {1}.', arrayThing),
+    test.notEqual(format('Good {-2} Sir {1}.', arrayThing),
                    'Good evening Sir Lancelot.');
 
     test.done();
