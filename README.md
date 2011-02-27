@@ -9,11 +9,11 @@ The library brings with it the `Formatter` factory and the `FormatError`.
 # Usage
     
 In order to use Fōmatto it is necessary to create a `format` function with the 
-`Formatter` factory
+`Formatter` factory.
 
     Formatter([formats])
 
-## The `format` function
+### The `format` function
 
     format(template, arg1[, arg2, arg3, ...argN])
 
@@ -39,7 +39,7 @@ an **array** or **array like object** (an object with a `length` property of typ
     > format('Good {0} Sir {1}.', {0: 'morning', 1: 'Lancelot', length: 2})
     'Good morning Sir Lancelot.'
 
-## Templates
+### Templates
 
 String templates contain placeholders wrapped in `{}`. There are a number of
 different ways in which these placeholders can be used to insert data into a
@@ -49,7 +49,7 @@ template.
    array or a list of arguments.
 
  - Positive `{1}` or negative `{-1}` indexes, these will insert the **Nth** or 
-   **Nth last** index of an array or a list of arguments.
+   **length + Nth** index of an array or a list of arguments.
 
  - Property access via `{name}`, these will either insert the corresponding
    **property of an object** or behave like auto indexes in case of an array or 
@@ -70,7 +70,7 @@ formatting function to the value before it is inserted.
     > format('Some fruits: {:join(', ')}!', ['melons', 'oranges', 'strawberries'])
     'Some fruits: melons, oranges, strawberries!'
 
-## Standard formats
+### Standard formats
     
 - `upper` will transform to UPPER case.
 - `lower` will transform to lower case.
@@ -89,7 +89,7 @@ formatting function to the value before it is inserted.
 - `bin([leading=false])` will convert to binary representation. If leading
   is true `0b` will be prepended.                                     
 
-## Custom formats
+### Custom formats
 
 Using the `Formatter` factory one can add their own formatters.
 
@@ -103,7 +103,7 @@ Using the `Formatter` factory one can add their own formatters.
     'Here come the five unicorns!'
 
 It is also possible to add more formats later on by setting properties on the
-`formats` object of a formatter.
+`formats` object of a `format` function.
 
     custom.formats.foo = function(value) {
         return 'foo';
@@ -111,7 +111,7 @@ It is also possible to add more formats later on by setting properties on the
 
 This will add the format `:foo`.
 
-## Adding default formats
+### Adding default formats
 
 By extending `Formatter.formats` it's also possible to add more default
 formats.
@@ -120,5 +120,5 @@ formats.
         // ...   
     };
 
-The format `:bonsai` will now be available to all formatters.
+The format `:bonsai` will now be available to all `format` functions.
 
