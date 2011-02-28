@@ -236,7 +236,7 @@ exports.testPropertyAccessEscaped = function(test) {
         }
     }), 'My favorite color is blue.');
 
-    test.equals(format('My favorite color is {colors["\"favorite\""]}.', {
+    test.equals(format('My favorite color is {colors[""favorite""]}.', {
         colors: {
             '"favorite"': 'blue'
         }
@@ -248,7 +248,7 @@ exports.testPropertyAccessEscaped = function(test) {
         }
     }), 'My favorite color is blue.');
 
-    test.equals(format('My favorite color is {colors[\'\'favorite\'\']}.', {
+    test.equals(format("My favorite color is {colors[''favorite'']}.", {
         colors: {
             '\'favorite\'': 'blue'
         }
@@ -306,11 +306,11 @@ exports.testFormattingArgs = function(test) {
             test.ok(numPositive === 1);
             test.ok(numNegative === -1);
             test.ok(strEmpty === '');
-            test.ok(strDouble === 'te\'\"st');
-            test.ok(strSingle === 'te\'\"st');
+            test.ok(strDouble === 'te\'\"\"st');
+            test.ok(strSingle === 'te\'\'\"st');
         }
     });
-    custom('{:test(true, false, 1, -1, "", "te\'\\"st", \'te\\\'"st\')}', '');
+    custom('{:test(true, false, 1, -1, "", "te\'\\"\\"st", \'te\\\'\\\'"st\')}', '');
     test.done();
 };
 
