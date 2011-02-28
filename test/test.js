@@ -127,20 +127,38 @@ exports.testArrayIndex = function(test) {
 };
 
 exports.testArrayLikes = function(test) {
-    test.expect(3);
+    test.expect(4);
 
+    // Arguments should be supported
     function foo() {
         test.equals(format('Good {-2} Sir {1}.', arguments),
                     'Good evening Sir Lancelot.');
     }
     foo('evening', 'Lancelot');
 
+    // Support array like object
     var arrayThing = {0: 'evening', 1: 'Lancelot', length: 2};
     test.equals(format('Good {-2} Sir {1}.', arrayThing),
                 'Good evening Sir Lancelot.');
 
+    // only have numeric lengths work
     arrayThing.length = '4';
     test.notEqual(format('Good {-2} Sir {1}.', arrayThing),
+                   'Good evening Sir Lancelot.');
+
+    // make sure to now fall for prototype stuff
+    function Foo() {
+        this[0] = 'evening';
+        this[1] = 'Lancelot';
+    }
+    Foo.prototype.length = 4;
+
+    // make sure it's bulletproof
+    Foo.prototype.hasOwnProperty = function() {
+        return false;
+    };
+
+    test.notEqual(format('Good {-2} Sir {1}.', new Foo()),
                    'Good evening Sir Lancelot.');
 
     test.done();
