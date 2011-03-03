@@ -1,12 +1,14 @@
+
+
 // Setup
 if (typeof window === 'undefined') {
     Formatter = require('./../lib/fomatto').Formatter;
     FormatError = require('./../lib/fomatto').FormatError;
-    format = Formatter();
+    var format = Formatter();
 
 } else {
     exports = {};
-    format = Formatter();
+    var format = Formatter();
 }
 
 function is(type, obj) {
