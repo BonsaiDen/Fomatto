@@ -334,12 +334,22 @@ exports.testFormattingArgs = function(test) {
     test.done();
 };
 
-exports.testFormattingArgsWithProperty = function(test) {
+exports.testFormattingWithProperty = function(test) {
     var custom = Formatter({
         JSON: JSON.stringify
     });
     test.equal(custom('({:JSON})', [1,2,3]), '([1,2,3])');
     test.equal(custom('({property:JSON})', {property: [1,2,3] }), '([1,2,3])');
+    test.done();
+};
+
+exports.testFormattingCalledJustOnce = function(test) {
+    var called = 0;
+    var custom = Formatter({
+        JSON: function (value) { called ++; return JSON.stringify(value) }
+    });
+    custom('({property:JSON})', {property: [1,2,3] })
+    test.equal(called, 1)
     test.done();
 };
 
