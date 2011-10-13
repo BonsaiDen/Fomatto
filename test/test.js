@@ -334,6 +334,16 @@ exports.testFormattingArgs = function(test) {
     test.done();
 };
 
+exports.testFormattingArgsWithProperty = function(test) {
+    var custom = Formatter({
+        JSON: JSON.stringify
+    });
+    test.equal(custom('({:JSON})', [1,2,3]), '([1,2,3])');
+    test.equal(custom('({property:JSON})', {property: [1,2,3] }), '([1,2,3])');
+    test.done();
+};
+
+
 exports.testFormattingJoin = function(test) {
     test.expect(5);
     test.equals(format('{:join(" ")}', ['blue', 'red', 'green', 'yellow']),
