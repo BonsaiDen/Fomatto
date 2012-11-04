@@ -1,3 +1,4 @@
+/*global Formatter, FormatError */
 
 
 // Setup
@@ -214,6 +215,20 @@ exports.testObjectToString = function(test) {
 };
 
 
+// Undefined / Null -----------------------------------------------------------
+// ----------------------------------------------------------------------------
+exports.testUndefinedNull = function(test) {
+
+    test.expect(4);
+    test.equals(format('No{undef}thing', undefined), 'Noundefinedthing');
+    test.equals(format('No{x}thing', { x: undefined }), 'Noundefinedthing');
+    test.equals(format('No{null}thing', null), 'Nonullthing');
+    test.equals(format('No{x}thing', { x: null }), 'Nonullthing');
+    test.done();
+
+};
+
+
 // Property Access --------------------------------------------------------------
 // ------------------------------------------------------------------------------
 exports.testPropertyAccess = function(test) {
@@ -346,10 +361,10 @@ exports.testFormattingWithProperty = function(test) {
 exports.testFormattingCalledJustOnce = function(test) {
     var called = 0;
     var custom = Formatter({
-        JSON: function (value) { called ++; return JSON.stringify(value) }
+        JSON: function (value) { called ++; return JSON.stringify(value); }
     });
-    custom('({property:JSON})', {property: [1,2,3] })
-    test.equal(called, 1)
+    custom('({property:JSON})', {property: [1,2,3] });
+    test.equal(called, 1);
     test.done();
 };
 
