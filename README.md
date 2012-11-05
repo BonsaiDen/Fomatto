@@ -15,12 +15,15 @@ In order to use Fōmatto it is necessary to create a `format` function with the
 
 ### The `format` function
 
+```javascript
     format(template, arg1[, arg2, arg3, ...argN])
+```
 
 The `format` function takes a **template** and either  **multiple arguments**, 
 an **array** or **array like object** (an object with a `length` property of type
 `Number`) or a standard **object** as its arguments. 
 
+```javascript
     > format('Good {} Sir {}.', 'morning', 'Lancelot')
     'Good morning Sir Lancelot.'
 
@@ -38,6 +41,7 @@ an **array** or **array like object** (an object with a `length` property of typ
 
     > format('Good {0} Sir {1}.', {0: 'morning', 1: 'Lancelot', length: 2})
     'Good morning Sir Lancelot.'
+```
 
 ### Templates
 
@@ -64,11 +68,13 @@ template.
 By appending a semicolon at the end of a placeholder it is possible to apply a
 formatting function to the value before it is inserted.
 
+```javascript
     > format('{0:upper}!', 'banana')
     'BANANA!'
 
     > format('Some fruits: {:join(', ')}!', ['melons', 'oranges', 'strawberries'])
     'Some fruits: melons, oranges, strawberries!'
+```
 
 ### Standard formats
     
@@ -93,6 +99,7 @@ formatting function to the value before it is inserted.
 
 Using the `Formatter` factory one can add their own formatters.
 
+```javascript
     var custom = Formatter({
         unicorns: function(value) {
             return value + ' unicorns!';
@@ -101,13 +108,16 @@ Using the `Formatter` factory one can add their own formatters.
 
     > custom('Here come the {:unicorns}', 'five')
     'Here come the five unicorns!'
+```
 
 It is also possible to add more formats later on by setting properties on the
 `formats` object of a `format` function.
 
+```javascript
     custom.formats.foo = function(value) {
         return 'foo';
     };
+```
 
 This will add the format `:foo`.
 
@@ -116,9 +126,11 @@ This will add the format `:foo`.
 By extending `Formatter.formats` it's also possible to add more default
 formats.
 
+```javascript
     Formatter.formats.bonsai = function(value) {
         // ...   
     };
+```
 
 The format `:bonsai` will now be available to all `format` functions.
 
