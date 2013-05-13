@@ -19,7 +19,7 @@
     
     "repository": {
         "type" : "git",
-        "url" : "http://github.com/BonsaiDen/fomatto.git"
+        "url" : "http://github.com/BonsaiDen/Fomatto.git"
     },
 
     "bugs": {
