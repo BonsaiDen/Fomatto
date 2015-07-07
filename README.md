@@ -15,6 +15,8 @@ In order to use Fōmatto it is necessary to create a `format` function with the
 
 ### node
 
+    $ npm install --save fomatto
+
     var format = require('fomatto').Formatter([formats]);
 
 ### The `format` function
