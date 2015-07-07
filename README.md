@@ -10,8 +10,12 @@ The library brings with it the `Formatter` factory and the `FormatError`.
     
 In order to use Fōmatto it is necessary to create a `format` function with the 
 `Formatter` factory.
-
+    
     Formatter([formats])
+
+### node
+
+    var format = require('fomatto').Formatter([formats]);
 
 ### The `format` function
 
